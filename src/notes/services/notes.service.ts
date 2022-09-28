@@ -1,11 +1,11 @@
 import {HttpException, HttpStatus, Injectable} from '@nestjs/common';
-import {Note, NotesRepository} from "../repositories/notes.repository";
+import {Note, NotesRepository} from "../repositories";
 
-import {CreateNoteDto} from "../dto/create-note.dto";
-import {StateCalculation} from "../../helpers/stateCalculation";
-import {getDateFromText} from "../../helpers/getDateFromText";
-import {getSpecialData} from "../../helpers/getSpecialData";
-import {getId} from "../../helpers/getId";
+import {CreateNoteDto} from "../dto";
+import {StateCalculation} from "../../helpers";
+import {getDateFromText} from "../../helpers";
+import {getSpecialData} from "../../helpers";
+import {getId} from "../../helpers";
 
 @Injectable()
 export class NotesService {

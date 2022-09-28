@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import {ConfigModule} from "@nestjs/config";
-import {NotesService} from "./services/notes.service";
-import {NotesRepository} from "./repositories/notes.repository";
-import {NotesController} from "./routes/notes.controller";
+import {NotesService} from "./services";
+import {NotesRepository} from "./repositories";
+import {NotesController} from "./routes";
 
 @Module({
   providers: [NotesService, NotesRepository],

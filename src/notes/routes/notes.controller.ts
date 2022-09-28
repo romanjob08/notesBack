@@ -1,8 +1,8 @@
 import {Body, Controller, Delete, Get, Param, Patch, Post} from '@nestjs/common';
-import {NotesService} from '../services/notes.service';
+import {NotesService} from '../services';
 import {ApiOperation, ApiResponse, ApiTags} from "@nestjs/swagger";
-import {CreateNoteDto} from "../dto/create-note.dto";
-import {Resp} from "../../classes/response";
+import {CreateNoteDto} from "../dto";
+import {Resp} from "../../classes";
 
 @ApiTags('Notes')
 @Controller('notes')
@@ -30,7 +30,7 @@ export class NotesController {
     @ApiResponse({status: 200})
     @Get(':id')
     getNote(@Param('id') id: string) {
-        const data =this.notesService.getNote(id)
+        const data = this.notesService.getNote(id)
         return new Resp(data, 200);
     }
 
