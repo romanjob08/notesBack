@@ -1,7 +1,12 @@
-type Category = 'Idea' | 'Random Thought' | 'Task'
+import {IsIn, IsString} from "class-validator";
 
 export class CreateNoteDto {
-    readonly name: string
-    readonly category: Category
-    readonly content: string
+    @IsString()
+    name: string;
+
+    @IsIn(['Idea', 'Random Thought', 'Task'])
+    category: string
+
+    @IsString()
+    content: string
 }
