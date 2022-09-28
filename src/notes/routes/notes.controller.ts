@@ -1,41 +1,60 @@
-import {Controller, Delete, Get, Patch, Post} from '@nestjs/common';
+import {Body, Controller, Delete, Get, Param, Patch, Post} from '@nestjs/common';
 import {NotesService} from '../services/notes.service';
+import {ApiOperation, ApiResponse, ApiTags} from "@nestjs/swagger";
+import {CreateNoteDto} from "../dto/create-note.dto";
+import {Resp} from "../../classes/response";
 
+@ApiTags('Notes')
 @Controller('notes')
 export class NotesController {
-    constructor(private readonly appService: NotesService) {
+    constructor(private readonly notesService: NotesService) {
     }
 
+    @ApiOperation({summary: 'get all notes'})
+    @ApiResponse({status: 200})
     @Get()
-    getAllNotes(): string {
-        return this.appService.getAllNotes();
+    getAllNotes() {
+        const data = this.notesService.getAllNotes();
+        return new Resp(data, 200);
     }
 
-    @Post()
-    createNote(): string {
-        return this.appService.createNote()
-    }
-
+    @ApiOperation({summary: 'Get notes Status'})
+    @ApiResponse({status: 200})
     @Get('/status')
-    getNotesStatus(): string {
-        return this.appService.getStatus();
+    getNotesStatus() {
+        const data = this.notesService.getStatus()
+        return new Resp(data, 200);
     }
 
-    // @Get('/:id')
-    @Get('/1')
-    getNote(): string {
-        return this.appService.getNote();
+    @ApiOperation({summary: 'Get note'})
+    @ApiResponse({status: 200})
+    @Get(':id')
+    getNote(@Param('id') id: string) {
+        const data =this.notesService.getNote(id)
+        return new Resp(data, 200);
     }
 
-    // @Patch('/:id')
-    @Patch('/1')
-    editNote(): string {
-        return this.appService.editNote()
+    @ApiOperation({summary: 'Create note'})
+    @ApiResponse({status: 201})
+    @Post()
+    createNote(@Body() createNoteDto: CreateNoteDto) {
+        const data = this.notesService.createNote(createNoteDto)
+        return new Resp(data, 201);
     }
 
-    // @Delete('/:id')
-    @Delete('/2')
-    deleteNote(): string {
-        return this.appService.deleteNote()
+    @ApiOperation({summary: 'Redact note'})
+    @ApiResponse({status: 200})
+    @Patch(':id')
+    editNote(@Param('id') id: string, @Body() createNoteDto: CreateNoteDto): Resp {
+        const data = this.notesService.editNote(id, createNoteDto)
+        return new Resp(data, 200);
+    }
+
+    @ApiOperation({summary: 'Delete note'})
+    @ApiResponse({status: 200})
+    @Delete(':id')
+    deleteNote(@Param('id') id: string) {
+        const data = this.notesService.deleteNote(id)
+        return new Resp(data, 200);
     }
 }
