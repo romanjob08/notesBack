@@ -89,12 +89,18 @@ export class NotesRepository {
         }
     }
 
+
     addNote(item: Note): Note {
         this.notes.push(item)
         return item;
     }
 
     editNote(index: number, editNote: Note): Note {
+        this.notes[index] = editNote
+        return this.notes[index]
+    }
+
+    archiver(index: number, editNote: Note): Note {
         this.notes[index] = editNote
         return this.notes[index]
     }

@@ -48,13 +48,29 @@ export class NotesService {
             throw new HttpException('Id not found', HttpStatus.BAD_REQUEST)
         }
         return this.notes.editNote(index, {
-            id: notes[index].id,
-            name: parameters.name,
-            created: getSpecialData(),
-            category: parameters.category,
-            content: parameters.content,
-            dates: getDateFromText(parameters.content),
-            active: true
+            ...notes[index], name: parameters.name, category: parameters.category, content: parameters.content
+        })
+    }
+
+    archiveNote(id: string): Note {
+        const notes = this.notes.getAllNotes()
+        const index = notes.findIndex(item => item.id === id)
+        if (index < 0) {
+            throw new HttpException('Id not found', HttpStatus.BAD_REQUEST)
+        }
+        return this.notes.archiver(index, {
+            ...notes[index], active: false
+        })
+    }
+
+    anArchiveNote(id: string): Note {
+        const notes = this.notes.getAllNotes()
+        const index = notes.findIndex(item => item.id === id)
+        if (index < 0) {
+            throw new HttpException('Id not found', HttpStatus.BAD_REQUEST)
+        }
+        return this.notes.archiver(index, {
+            ...notes[index], active: true
         })
     }
 

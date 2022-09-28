@@ -1,4 +1,4 @@
-import {Body, Controller, Delete, Get, Param, Patch, Post} from '@nestjs/common';
+import {Body, Controller, Delete, Get, Param, Patch, Post, Put} from '@nestjs/common';
 import {NotesService} from '../services';
 import {ApiOperation, ApiResponse, ApiTags} from "@nestjs/swagger";
 import {CreateNoteDto} from "../dto";
@@ -47,6 +47,22 @@ export class NotesController {
     @Patch(':id')
     editNote(@Param('id') id: string, @Body() createNoteDto: CreateNoteDto): Resp {
         const data = this.notesService.editNote(id, createNoteDto)
+        return new Resp(data, 200);
+    }
+
+    @ApiOperation({summary: 'Redact note'})
+    @ApiResponse({status: 200})
+    @Put('/archive/:id')
+    archiveNote(@Param('id') id: string): Resp {
+        const data = this.notesService.archiveNote(id)
+        return new Resp(data, 200);
+    }
+
+    @ApiOperation({summary: 'Redact note'})
+    @ApiResponse({status: 200})
+    @Put('/anarchive/:id')
+    anArchiveNote(@Param('id') id: string): Resp {
+        const data = this.notesService.anArchiveNote(id)
         return new Resp(data, 200);
     }
 
