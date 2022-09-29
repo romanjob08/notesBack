@@ -16,7 +16,7 @@ export class NotesService {
         return this.notes.getAllNotes();
     }
 
-    getStatus() {
+    getStats() {
         return StateCalculation(this.notes.getAllNotes());
     }
 

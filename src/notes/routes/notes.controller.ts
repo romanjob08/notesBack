@@ -20,9 +20,9 @@ export class NotesController {
 
     @ApiOperation({summary: 'Get notes Status'})
     @ApiResponse({status: 200})
-    @Get('/status')
-    getNotesStatus() {
-        const data = this.notesService.getStatus()
+    @Get('/stats')
+    getNotesStats() {
+        const data = this.notesService.getStats()
         return new Resp(data, 200);
     }
 
