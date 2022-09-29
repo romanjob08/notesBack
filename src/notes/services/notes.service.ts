@@ -24,7 +24,7 @@ export class NotesService {
         if (this.notes.getNoteById(id)) {
             return this.notes.getNoteById(id);
         }
-        throw new HttpException('Id not found', HttpStatus.BAD_REQUEST)
+        throw new HttpException('Item not found', HttpStatus.BAD_REQUEST)
     }
 
     createNote(parameters: CreateNoteDto): Note {
@@ -45,7 +45,7 @@ export class NotesService {
         const notes = this.notes.getAllNotes()
         const index = notes.findIndex(item => item.id === id)
         if (index < 0) {
-            throw new HttpException('Id not found', HttpStatus.BAD_REQUEST)
+            throw new HttpException('Item not found', HttpStatus.BAD_REQUEST)
         }
         return this.notes.editNote(index, {
             ...notes[index], name: parameters.name, category: parameters.category, content: parameters.content
@@ -56,18 +56,18 @@ export class NotesService {
         const notes = this.notes.getAllNotes()
         const index = notes.findIndex(item => item.id === id)
         if (index < 0) {
-            throw new HttpException('Id not found', HttpStatus.BAD_REQUEST)
+            throw new HttpException('Item not found', HttpStatus.BAD_REQUEST)
         }
         return this.notes.archiver(index, {
             ...notes[index], active: false
         })
     }
 
-    anArchiveNote(id: string): Note {
+    unArchiveNote(id: string): Note {
         const notes = this.notes.getAllNotes()
         const index = notes.findIndex(item => item.id === id)
         if (index < 0) {
-            throw new HttpException('Id not found', HttpStatus.BAD_REQUEST)
+            throw new HttpException('Item not found', HttpStatus.BAD_REQUEST)
         }
         return this.notes.archiver(index, {
             ...notes[index], active: true
@@ -77,7 +77,7 @@ export class NotesService {
     deleteNote(id: string): Note[] | string {
         const index = this.notes.getAllNotes().findIndex(item => item.id === id);
         if (index < 0) {
-            throw new HttpException('Id not found', HttpStatus.BAD_REQUEST)
+            throw new HttpException('Item not found', HttpStatus.BAD_REQUEST)
         }
         return this.notes.deleteNote(index)
     }

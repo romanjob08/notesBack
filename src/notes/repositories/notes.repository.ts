@@ -82,13 +82,12 @@ export class NotesRepository {
         return this.notes;
     }
 
-    getNoteById(id: string): Note{
+    getNoteById(id: string): Note {
         const index = this.notes.findIndex(item => item.id === id)
         if (index >= 0) {
             return this.notes[index]
         }
     }
-
 
     addNote(item: Note): Note {
         this.notes.push(item)

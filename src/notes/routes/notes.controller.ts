@@ -50,7 +50,7 @@ export class NotesController {
         return new Resp(data, 200);
     }
 
-    @ApiOperation({summary: 'Redact note'})
+    @ApiOperation({summary: 'Archive note'})
     @ApiResponse({status: 200})
     @Put('/archive/:id')
     archiveNote(@Param('id') id: string): Resp {
@@ -58,11 +58,11 @@ export class NotesController {
         return new Resp(data, 200);
     }
 
-    @ApiOperation({summary: 'Redact note'})
+    @ApiOperation({summary: 'Unarchive note'})
     @ApiResponse({status: 200})
-    @Put('/anarchive/:id')
-    anArchiveNote(@Param('id') id: string): Resp {
-        const data = this.notesService.anArchiveNote(id)
+    @Put('/unarchive/:id')
+    unArchiveNote(@Param('id') id: string): Resp {
+        const data = this.notesService.unArchiveNote(id)
         return new Resp(data, 200);
     }
 
