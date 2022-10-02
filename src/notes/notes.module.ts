@@ -1,16 +1,14 @@
-import { Module } from '@nestjs/common';
-import {ConfigModule} from "@nestjs/config";
-import {NotesService} from "./services";
-import {NotesRepository} from "./repositories";
-import {NotesController} from "./routes";
+import { Module } from "@nestjs/common";
+import { SequelizeModule } from "@nestjs/sequelize";
+import { NotesController } from "./routes";
+import { NotesService } from "./services";
+import { Note } from "./repositories";
 
 @Module({
-  providers: [NotesService, NotesRepository],
   controllers: [NotesController],
+  providers: [NotesService],
   imports: [
-      ConfigModule.forRoot({
-          envFilePath: `.${process.env.NODE_ENV}.env`
-      })
-  ],
+    SequelizeModule.forFeature([Note])
+  ]
 })
 export class NotesModule {}

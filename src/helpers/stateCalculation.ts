@@ -1,5 +1,4 @@
-import {Note} from "../notes/repositories/notes.repository";
-
+import { Note } from "../notes";
 
 const active = (notes: Note[]): number => {
   return notes.filter(item => item.active).length
