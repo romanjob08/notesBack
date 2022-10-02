@@ -25,7 +25,7 @@ export class Note extends Model<Note, NoteCreationAttrs>{
   @Column({type: DataType.STRING, allowNull: false})
   content: string;
 
-  @ApiProperty({example: '3/5/2021, 5/5/2021', description: 'Here will be the date from the text'})
+  @ApiProperty({example: '3/5/2021, 5/5/2021', description: 'Here will be the date from the content'})
   @Column({type: DataType.STRING})
   dates: string;
 

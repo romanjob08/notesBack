@@ -13,7 +13,4 @@ export class CreateNoteDto {
   @ApiProperty({example:'Power doesn\'t exist', description: 'This should be the body of your note'})
   @IsString()
   readonly content: string
-
-  @ApiProperty({example:'3/5/2021, 5/5/2021', description: 'Here will be the dates that you write in the content'})
-  readonly dates?: string;
 }
