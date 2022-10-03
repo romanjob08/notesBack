@@ -1,71 +1,57 @@
-import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
-import { InjectModel } from "@nestjs/sequelize";
-import { Note } from "../repositories";
+import { HttpException, HttpStatus, Inject, Injectable } from "@nestjs/common";
+import { Note, NotesRepository } from "../data";
 import { CreateNoteDto } from "../dto";
-import { getDateFromText } from "../../helpers";
-import { StateCalculation } from "../../helpers";
+import { getDateFromText, StateCalculation } from "../../helpers";
 
 @Injectable()
 export class NotesService {
 
-  constructor(@InjectModel(Note) private noteRepository: typeof Note) {
+  constructor(@Inject(NotesRepository) private notesRepository: NotesRepository) {
   }
 
-  async getAllNotes(): Promise<Note[]> {
-    return await this.noteRepository.findAll()
+  getAll(): Promise<Note[]> {
+    return this.notesRepository.getAllNotes();
+  }
+
+  async getStats() {
+    const notes = this.notesRepository.getAllNotes();
+    return StateCalculation(await notes);
   }
 
   async getOneNote(id: number): Promise<Note> {
-    const note = await this.noteRepository.findOne({ where: { id } })
-    console.log()
-    if(!note) {
-      throw new HttpException('Note not found', HttpStatus.NOT_FOUND)
+    const note = await this.notesRepository.getNoteById(id);
+    if (!note) {
+      throw new HttpException("Note not found", HttpStatus.NOT_FOUND);
     }
-    return note
+    return note;
   }
 
-  async getStats(): Promise<{}> {
-    const notes = await this.noteRepository.findAll()
-    StateCalculation(notes)
-    return StateCalculation(notes)
-  }
-
-  async createNote(dto: CreateNoteDto): Promise<Note> {
-    const note = await this.noteRepository.create(dto);
-    note.dates = getDateFromText(dto.content);
-    await note.save();
-    return note
+  createNote(dto: CreateNoteDto): Promise<Note> {
+    return this.notesRepository.createNote(dto, getDateFromText(dto.content));
   }
 
   async deleteNote(id: number): Promise<Note> {
-    const note =  await this.noteRepository.findOne({ where: { id } })
+    const note =  await this.notesRepository.getNoteById(id)
     if(!note) {
       throw new HttpException('Note not found', HttpStatus.NOT_FOUND)
     }
-    await this.noteRepository.destroy({where:{id}})
+    await this.notesRepository.deleteNoteById(id)
     return note
   }
 
   async editNote(id: number, dto: CreateNoteDto): Promise<Note> {
-    const note = await this.noteRepository.findByPk(id)
+    const note = await this.notesRepository.getNoteById(id)
     if(!note) {
       throw new HttpException('Note not found', HttpStatus.NOT_FOUND)
     }
-    note.name = dto.name
-    note.category = dto.category
-    note.content = dto.content
-    note.dates = getDateFromText(dto.content)
-    await note.save()
-    return note
+    return this.notesRepository.editNoteById(id, dto, getDateFromText(dto.content))
   }
 
   async archiver(id: number) : Promise<Note> {
-    const note = await this.noteRepository.findByPk(id)
+    const note = await this.notesRepository.getNoteById(id)
     if(!note) {
       throw new HttpException('Note not found', HttpStatus.NOT_FOUND)
     }
-    note.active = !note.active
-    await note.save()
-    return note
+    return this.notesRepository.archiverById(id)
   }
 }

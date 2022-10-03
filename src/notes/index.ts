@@ -1,5 +1,5 @@
 export * from './dto'
-export * from './repositories'
+export * from './data/models'
 export * from './routes'
 export * from './services'
 export * from './notes.module'

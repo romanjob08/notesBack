@@ -2,7 +2,7 @@ import { Body, Controller, Delete, Get, Param, Patch, Post, Put } from "@nestjs/
 import { ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { CreateNoteDto } from "../dto";
 import { NotesService } from "../services";
-import { Note } from "../repositories";
+import { Note } from "../data";
 
 @ApiTags('Notes')
 @Controller("notes")
@@ -15,7 +15,7 @@ export class NotesController {
   @ApiResponse({ status: 200, type: [Note]})
   @Get()
   getAll() {
-    return this.notesService.getAllNotes();
+    return this.notesService.getAll();
   }
 
   @ApiOperation({ summary: "Get all notes" })
