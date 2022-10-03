@@ -9,7 +9,7 @@ export class NotesService {
   constructor(@Inject(NotesRepository) private notesRepository: NotesRepository) {
   }
 
-  getAll(): Promise<Note[]> {
+  async getAll(): Promise<Note[]> {
     return this.notesRepository.getAllNotes();
   }
 
@@ -26,7 +26,7 @@ export class NotesService {
     return note;
   }
 
-  createNote(dto: CreateNoteDto): Promise<Note> {
+  async createNote(dto: CreateNoteDto): Promise<Note> {
     return this.notesRepository.createNote(dto, getDateFromText(dto.content));
   }
 

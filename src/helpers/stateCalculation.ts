@@ -13,6 +13,7 @@ export const StateCalculation = (notes: Note[]) => {
     const randomThoughts = notes.filter(item => item.category === 'Random Thought')
     return {
         active: {
+
             idea: active(ideas),
             task: active(tasks),
             random_thought: active(randomThoughts),
